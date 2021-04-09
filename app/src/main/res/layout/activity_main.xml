@@ -6,7 +6,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-        <com.example.game.view.MyView android:id="@+id/board"
-                                      android:layout_width="match_parent"
-                                      android:layout_height="match_parent" />
+    <RelativeLayout android:id="@+id/broadMain" android:layout_width="match_parent" android:layout_height="match_parent">
+        <com.example.game.view.ChessView android:id="@+id/board"
+                                         android:layout_width="match_parent"
+                                         android:layout_height="match_parent"/>
+    </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

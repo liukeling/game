@@ -7,9 +7,10 @@ import android.graphics.Paint;
 import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import com.example.game.view.ChessView;
 
 public class MainActivity extends AppCompatActivity {
-    private View board;
+    private ChessView board;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
