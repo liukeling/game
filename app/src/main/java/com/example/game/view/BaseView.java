@@ -9,6 +9,8 @@ import android.view.View;
 public abstract class BaseView extends View {
     //画笔
     protected final Paint paint = new Paint();
+    protected int cellX;
+    protected int cellY;
 
     public BaseView(Context context) {
         super(context);
@@ -41,8 +43,23 @@ public abstract class BaseView extends View {
      */
     protected abstract void initPaint();
     /**
-     * 画棋盘
+     * 绘画
      * @param canvas
      */
     protected abstract void drawBoard(Canvas canvas);
+
+    /**
+     * 还原
+     */
+    protected void reset(){
+
+    }
+
+    public int getCellX() {
+        return cellX;
+    }
+
+    public int getCellY() {
+        return cellY;
+    }
 }
