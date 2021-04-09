@@ -6,7 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-        <View android:id="@+id/board"
-                android:layout_width="match_parent"
-              android:layout_height="match_parent" />
+        <com.example.game.view.MyView android:id="@+id/board"
+                                      android:layout_width="match_parent"
+                                      android:layout_height="match_parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

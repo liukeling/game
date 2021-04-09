@@ -23,13 +23,6 @@ public class MainActivity extends AppCompatActivity {
         if(board == null) {
             board = findViewById(R.id.board);
         }
-        int width = board.getWidth();
-        int height = board.getHeight();
-        Canvas canvas = new Canvas();
-        Paint paint = new Paint();
-        paint.setColor(Color.RED);
-        canvas.drawLine(0,0,width,height,paint);
-        board.draw(canvas);
     }
 
 }
