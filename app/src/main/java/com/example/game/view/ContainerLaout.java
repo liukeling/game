@@ -1,10 +1,7 @@
 package com.example.game.view;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -44,9 +41,9 @@ public class ContainerLaout extends RelativeLayout {
             if (GlobalConstant.containerLaout == null) {
                 GlobalConstant.containerLaout = this;
             }
-//            if(chessView != null) {
+            if(chessView != null) {
                 GlobalConstant.batchAddItem(chessView);
-//            }
+            }
         }
     }
 
@@ -89,5 +86,16 @@ public class ContainerLaout extends RelativeLayout {
                 }
             }
         }
+    }
+    public List<ChessItem> getBoundary(ChessItem curItem){
+        synchronized (chessItems){
+            return curItem.getBoundary(chessItems);
+        }
+    }
+    public int getContainerType(){
+        if(chessView == null){
+            return 1;
+        }
+        return chessView.getContainerType();
     }
 }

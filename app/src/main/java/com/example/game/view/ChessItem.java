@@ -14,8 +14,8 @@ import java.util.List;
 /**
  * 棋子
  */
-public class ChessItem extends BaseView {
-    private GlobalConstant.ItemColorEnum color;
+public abstract class ChessItem extends BaseView {
+    protected GlobalConstant.ItemColorEnum color;
     private GlobalConstant.ItemNameEnum name;
     private static final int BASE_BG_COLOR = Color.parseColor("#F4A460");
     private int bgColor = BASE_BG_COLOR;
@@ -65,8 +65,8 @@ public class ChessItem extends BaseView {
                     if (!GlobalConstant.hasUpItem) {
                         if (GlobalConstant.containerLaout != null) {
                             if (bgColor == BASE_BG_COLOR) {
-                                List<Integer[]> downInfoXYs = GlobalConstant.getDownInfoXYs(cellX, cellY, name,color.getType());
-
+                                //提示点
+                                List<Integer[]> downInfoXYs = getDownInfoXYs();
                                 for (Integer[] downInfoXY : downInfoXYs) {
                                     GlobalConstant.addDownInfo(downInfoXY[0],downInfoXY[1]);
                                 }
@@ -104,4 +104,20 @@ public class ChessItem extends BaseView {
         bgColor = BASE_BG_COLOR;
         invalidate();
     }
+
+    public GlobalConstant.ItemNameEnum getName() {
+        return name;
+    }
+
+    public GlobalConstant.ItemColorEnum getColor() {
+        return color;
+    }
+
+    public abstract List<ChessItem> getBoundary(List<ChessItem> allItems);
+
+    /**
+     * 获取提示点坐标
+     * @return
+     */
+    protected abstract List<Integer[]> getDownInfoXYs();
 }

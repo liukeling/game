@@ -7,6 +7,7 @@ import com.example.game.view.ChessItem;
 import com.example.game.view.ChessView;
 import com.example.game.view.ContainerLaout;
 import com.example.game.view.DownInfoView;
+import com.example.game.view.chess.items.ChessItemFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +94,7 @@ public class GlobalConstant {
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(containerLaout.getWidth() / 9, containerLaout.getHeight() / 10);
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
                 layoutParams.setMargins(0, (containerLaout.getHeight() / 10) * cellY, (containerLaout.getWidth() / 9) * (8 - cellX), 0);
-                containerLaout.addView(new ChessItem(containerLaout.getContext(), color, name, cellX, cellY), layoutParams);
+                containerLaout.addView(ChessItemFactory.getNewInstance(name, containerLaout.getContext(), color, cellX, cellY), layoutParams);
             }
         }
     }
@@ -116,7 +117,7 @@ public class GlobalConstant {
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(containerLaout.getWidth() / 9, containerLaout.getHeight() / 10);
                 layoutParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, RelativeLayout.TRUE);
                 layoutParams.setMargins(0, (containerLaout.getHeight() / 10) * cellY, (containerLaout.getWidth() / 9) * (8 - cellX), 0);
-                containerLaout.addView(new ChessItem(containerLaout.getContext(), itemView, cellX, cellY), layoutParams);
+                containerLaout.addView(ChessItemFactory.getNewInstance(itemView.getName(), containerLaout.getContext(), itemView.getColor(), cellX, cellY), layoutParams);
             }
         }
     }
@@ -158,153 +159,6 @@ public class GlobalConstant {
                 containerLaout.removeDownInfoViews();
             }
         }
-    }
-
-
-    public static List<Integer[]> getDownInfoXYs(int cellX, int cellY, GlobalConstant.ItemNameEnum nameType,int bingAddSubType) {
-        List<Integer[]> indexs = new ArrayList<>(nameType.getMaxIndexCount());
-
-        switch (nameType) {
-            case CHE:
-                cheAddIndexs(indexs, cellX, cellY);
-                break;
-            case MA:
-                maAddIndexs(indexs, cellX, cellY);
-                break;
-            case XIANG:
-                xiangAddIndexs(indexs, cellX, cellY);
-                break;
-            case SHI:
-                shiAddIndexs(indexs, cellX, cellY);
-                break;
-            case SHUAI:
-                shuaiAddIndexs(indexs, cellX, cellY);
-                break;
-            case PAO:
-                paoAddIndexs(indexs, cellX, cellY);
-                break;
-            case BING:
-                bingAddIndexs(indexs, cellX, cellY,bingAddSubType);
-                break;
-        }
-        return indexs;
-    }
-
-    public static void cheAddIndexs(List<Integer[]> indexs, int cellX, int cellY) {
-        for (int i = 0, offset = 0; i < ItemNameEnum.CHE.getMaxIndexCount(); i++) {
-            int xOrYIndex = i < 8 ? i : (i - 8);
-            int xYType = i / 8 == 0 ? 0 : 1;
-            if (i == 8) {
-                offset = 0;
-            }
-            if (xYType == 0) {
-                //x坐标
-                if (xOrYIndex == cellX) {
-                    offset++;
-                }
-                indexs.add(new Integer[]{xOrYIndex + offset, cellY});
-            } else {
-                if (xOrYIndex == cellY) {
-                    offset++;
-                }
-                indexs.add(new Integer[]{cellX, xOrYIndex + offset});
-            }
-
-        }
-    }
-
-    public static void maAddIndexs(List<Integer[]> indexs, int cellX, int cellY) {
-        for (int i = 0, count = 3; i < ItemNameEnum.MA.getMaxIndexCount(); i++) {
-            //x\y加减的数量
-            int xOryAddOrSub = (i % 2) + 1;//1,2
-            int otherAddOrSub = count - xOryAddOrSub;
-
-            int xyAddSubType = i / 2;//0,1,2,3
-
-            int x = cellX;
-            int y = cellY;
-            switch (xyAddSubType) {
-                case 0:
-                    x = x + xOryAddOrSub;
-                    y = y - otherAddOrSub;
-                    break;
-                case 1:
-                    x = x - xOryAddOrSub;
-                    y = y + otherAddOrSub;
-                    break;
-                case 2:
-                    y = y + xOryAddOrSub;
-                    x = x + otherAddOrSub;
-                    break;
-                case 3:
-                    y = y - xOryAddOrSub;
-                    x = x - otherAddOrSub;
-                    break;
-            }
-
-            indexs.add(new Integer[]{x, y});
-        }
-    }
-
-    public static void xiangAddIndexs(List<Integer[]> indexs, int cellX, int cellY) {
-        indexs.add(new Integer[]{cellX+2,cellY+2});
-        indexs.add(new Integer[]{cellX+2,cellY-2});
-        indexs.add(new Integer[]{cellX-2,cellY+2});
-        indexs.add(new Integer[]{cellX-2,cellY-2});
-    }
-
-    public static void shiAddIndexs(List<Integer[]> indexs, int cellX, int cellY) {
-        indexs.add(new Integer[]{cellX+1,cellY+1});
-        indexs.add(new Integer[]{cellX+1,cellY-1});
-        indexs.add(new Integer[]{cellX-1,cellY+1});
-        indexs.add(new Integer[]{cellX-1,cellY-1});
-    }
-
-    public static void shuaiAddIndexs(List<Integer[]> indexs, int cellX, int cellY) {
-        for (int i = 0; i < ItemNameEnum.SHUAI.getMaxIndexCount(); i ++){
-            int xOryAddOrSub = i%2;//0,1
-            int otherAddOrSub = 1;
-            int xyAddSubType = i/2;//0,1,2,3
-            int x = cellX;
-            int y = cellY;
-            switch (xyAddSubType) {
-                case 0:
-                    x = x + xOryAddOrSub;
-                    y = y - otherAddOrSub;
-                    break;
-                case 1:
-                    x = x - xOryAddOrSub;
-                    y = y + otherAddOrSub;
-                    break;
-                case 2:
-                    y = y + xOryAddOrSub;
-                    x = x + otherAddOrSub;
-                    break;
-                case 3:
-                    y = y - xOryAddOrSub;
-                    x = x - otherAddOrSub;
-                    break;
-            }
-            indexs.add(new Integer[]{x, y});
-        }
-    }
-
-    public static void paoAddIndexs(List<Integer[]> indexs, int cellX, int cellY) {
-        cheAddIndexs(indexs,cellX,cellY);
-    }
-
-    /**
-     *
-     * @param indexs
-     * @param cellX
-     * @param cellY
-     * @param addSubType y只加还是只减 0加 1减
-     */
-    public static void bingAddIndexs(List<Integer[]> indexs, int cellX, int cellY,int addSubType) {
-
-        indexs.add(new Integer[]{cellX+1,cellY});
-        indexs.add(new Integer[]{cellX-1,cellY});
-        indexs.add(new Integer[]{cellX,addSubType == 0?cellY+1:cellY-1});
     }
 
     public enum ItemNameEnum {
