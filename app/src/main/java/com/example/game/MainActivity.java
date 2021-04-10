@@ -20,10 +20,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         synchronized (GlobalConstant.handLock) {
             GlobalConstant.containerLaout = findViewById(R.id.broadMain);
-
-            GlobalConstant.containerLaout.addView(new ChessView(GlobalConstant.containerLaout.getContext()), new ViewGroup.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
+            GlobalConstant.containerLaout.addView(new ChessView(GlobalConstant.containerLaout.getContext(),1), new ViewGroup.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT));
         }
     }
 }

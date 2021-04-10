@@ -16,8 +16,10 @@ import java.util.*;
  * 棋局布局
  */
 public class ContainerLaout extends RelativeLayout {
-    private static List<DownInfoView> downViews = new ArrayList<>(10);
-    private static List<ChessItem> chessItems = new ArrayList<>(32);
+    private List<DownInfoView> downViews = new ArrayList<>(10);
+    private List<ChessItem> chessItems = new ArrayList<>(32);
+    private ChessView chessView;
+
     public ContainerLaout(Context context) {
         super(context);
     }
@@ -34,6 +36,7 @@ public class ContainerLaout extends RelativeLayout {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
+
     @Override
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
@@ -41,7 +44,9 @@ public class ContainerLaout extends RelativeLayout {
             if (GlobalConstant.containerLaout == null) {
                 GlobalConstant.containerLaout = this;
             }
-            GlobalConstant.batchAddItem();
+//            if(chessView != null) {
+                GlobalConstant.batchAddItem(chessView);
+//            }
         }
     }
 
@@ -57,6 +62,9 @@ public class ContainerLaout extends RelativeLayout {
             synchronized (chessItems){
                 chessItems.add((ChessItem) child);
             }
+        }
+        if(child instanceof ChessView){
+            this.chessView = (ChessView) child;
         }
     }
 
@@ -76,8 +84,9 @@ public class ContainerLaout extends RelativeLayout {
                 ChessItem chessItem = iterator.next();
                 if(cellX == chessItem.getCellX() && cellY == chessItem.getCellY()){
                     removeView(chessItem);
+                    iterator.remove();
+                    return;
                 }
-                iterator.remove();
             }
         }
     }

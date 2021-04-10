@@ -16,20 +16,10 @@ public class ChessView extends BaseView {
 
     private float cellWidth = 0;
     private float cellHeight = 0;
-    public ChessView(Context context) {
+    private int containerType = 0;
+    public ChessView(Context context, int containerType) {
         super(context);
-    }
-
-    public ChessView(Context context,AttributeSet attrs) {
-        super(context, attrs);
-    }
-
-    public ChessView(Context context,AttributeSet attrs, int defStyleAttr) {
-        super(context, attrs, defStyleAttr);
-    }
-
-    public ChessView(Context context,AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
+        this.containerType = containerType;
     }
 
     @Override
@@ -86,5 +76,9 @@ public class ChessView extends BaseView {
             }
         };
         super.setOnClickListener(onClickListener);
+    }
+
+    public int getContainerType() {
+        return containerType;
     }
 }

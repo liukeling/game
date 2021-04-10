@@ -9,16 +9,18 @@ import android.view.View;
 import androidx.annotation.Nullable;
 import com.example.game.contanst.GlobalConstant;
 
+import java.util.List;
+
 /**
  * 棋子
  */
 public class ChessItem extends BaseView {
-    private int color;
-    private String name;
+    private GlobalConstant.ItemColorEnum color;
+    private GlobalConstant.ItemNameEnum name;
     private static final int BASE_BG_COLOR = Color.parseColor("#F4A460");
     private int bgColor = BASE_BG_COLOR;
 
-    public ChessItem(Context context, int color, String name,int cellX,int cellY) {
+    public ChessItem(Context context, GlobalConstant.ItemColorEnum color, GlobalConstant.ItemNameEnum name, int cellX, int cellY) {
         super(context);
         this.bgColor = bgColor;
         this.color = color;
@@ -43,7 +45,7 @@ public class ChessItem extends BaseView {
 
     @Override
     protected void drawBoard(final Canvas canvas) {
-        calAndDraw(canvas, color, bgColor);
+        calAndDraw(canvas, color.getColor(), bgColor);
         setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,9 +65,11 @@ public class ChessItem extends BaseView {
                     if (!GlobalConstant.hasUpItem) {
                         if (GlobalConstant.containerLaout != null) {
                             if (bgColor == BASE_BG_COLOR) {
-                                //todo 提示点添加
-                                GlobalConstant.addDownInfo(4,4);
-                                GlobalConstant.addDownInfo(2,3);
+                                List<Integer[]> downInfoXYs = GlobalConstant.getDownInfoXYs(cellX, cellY, name,color.getType());
+
+                                for (Integer[] downInfoXY : downInfoXYs) {
+                                    GlobalConstant.addDownInfo(downInfoXY[0],downInfoXY[1]);
+                                }
                                 //拿起棋子 - 颜色变动
                                 GlobalConstant.hasUpItem = true;
                                 bgColor = Color.GREEN;
@@ -92,7 +96,7 @@ public class ChessItem extends BaseView {
         canvas.drawArc(getWidth() * 4f / 50f, (getHeight() - getWidth()) / 2 + getWidth() * 4f / 50f, getWidth() - getWidth() * 4f / 50f, getHeight() - (getHeight() - getWidth()) / 2 - getWidth() * 4f / 50f, 0, 360, true, paint);
         paint.setColor(color);
         paint.setTextSize(getWidth() * 2f / 3f);
-        canvas.drawText(name, getWidth() / 6f, getHeight() - (getHeight() - getWidth()) / 2 - getWidth() * 7f / 30f, paint);
+        canvas.drawText(name.getName(), getWidth() / 6f, getHeight() - (getHeight() - getWidth()) / 2 - getWidth() * 7f / 30f, paint);
     }
 
     @Override
