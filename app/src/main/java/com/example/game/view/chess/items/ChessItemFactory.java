@@ -1,8 +1,8 @@
 package com.example.game.view.chess.items;
 
 import android.content.Context;
-import com.example.game.contanst.GlobalConstant;
-import com.example.game.view.ChessItem;
+import com.example.game.view.chess.contanst.GlobalConstant;
+import com.example.game.view.chess.ChessItem;
 
 public class ChessItemFactory {
     private ChessItemFactory(){

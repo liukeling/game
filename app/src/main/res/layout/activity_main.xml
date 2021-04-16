@@ -6,6 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
-    <com.example.game.view.ContainerLaout android:id="@+id/broadMain" android:layout_width="match_parent" android:layout_height="match_parent">
-    </com.example.game.view.ContainerLaout>
+    <com.example.game.view.chess.ContainerLaout android:id="@+id/broadMain" android:layout_width="match_parent" android:layout_height="match_parent">
+    </com.example.game.view.chess.ContainerLaout>
 </androidx.constraintlayout.widget.ConstraintLayout>

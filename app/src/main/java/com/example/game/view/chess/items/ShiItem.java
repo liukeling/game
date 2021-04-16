@@ -2,10 +2,11 @@ package com.example.game.view.chess.items;
 
 import android.content.Context;
 import android.util.Log;
-import com.example.game.contanst.GlobalConstant;
-import com.example.game.view.ChessItem;
+import com.example.game.view.chess.contanst.GlobalConstant;
+import com.example.game.view.chess.ChessItem;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ShiItem extends ChessItem {
@@ -21,17 +22,35 @@ public class ShiItem extends ChessItem {
     }
 
     @Override
-    public List<ChessItem> getBoundary(List<ChessItem> allItems) {
-        return null;
-    }
-
-    @Override
     protected List<Integer[]> getDownInfoXYs() {
         List<Integer[]> indexs = new ArrayList<>(GlobalConstant.ItemNameEnum.SHI.getMaxIndexCount());
         indexs.add(new Integer[]{cellX+1,cellY+1});
         indexs.add(new Integer[]{cellX+1,cellY-1});
         indexs.add(new Integer[]{cellX-1,cellY+1});
         indexs.add(new Integer[]{cellX-1,cellY-1});
+        {
+            Iterator<Integer[]> iterator = indexs.iterator();
+            while (iterator.hasNext()) {
+                Integer[] index = iterator.next();
+                int x = index[0];
+                int y = index[1];
+                if (x < getColor().getShuaiMinX() || x > getColor().getShuaiMaxX() || y < getColor().getShuaiMinY() || y > getColor().getShuaiMaxY()) {
+                    iterator.remove();
+                }
+            }
+        }
+        for (ChessItem chessItem : GlobalConstant.containerLaout.getChessItems()) {
+            if(chessItem.getColor().getType() != getColor().getType()){
+                continue;
+            }
+            Iterator<Integer[]> iterator = indexs.iterator();
+            while (iterator.hasNext()){
+                Integer[] index = iterator.next();
+                if(chessItem.getCellX() == index[0] && chessItem.getCellY() == index[1]){
+                    iterator.remove();
+                }
+            }
+        }
         return indexs;
     }
 }

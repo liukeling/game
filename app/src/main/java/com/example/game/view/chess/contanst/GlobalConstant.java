@@ -1,12 +1,11 @@
-package com.example.game.contanst;
+package com.example.game.view.chess.contanst;
 
 import android.graphics.Color;
-import android.view.View;
 import android.widget.RelativeLayout;
-import com.example.game.view.ChessItem;
-import com.example.game.view.ChessView;
-import com.example.game.view.ContainerLaout;
-import com.example.game.view.DownInfoView;
+import com.example.game.view.chess.ChessItem;
+import com.example.game.view.chess.ChessView;
+import com.example.game.view.chess.ContainerLaout;
+import com.example.game.view.chess.DownInfoView;
 import com.example.game.view.chess.items.ChessItemFactory;
 
 import java.util.ArrayList;
@@ -110,7 +109,7 @@ public class GlobalConstant {
         synchronized (handLock) {
             if (containerLaout != null) {
                 //移除举起的棋子
-                containerLaout.removeView(itemView);
+                containerLaout.removeChessItem(itemView.getCellX(),itemView.getCellY());
                 //移除位置上原有的棋子
                 containerLaout.removeChessItem(cellX, cellY);
                 //举起的棋子放入这个位置
@@ -183,13 +182,23 @@ public class GlobalConstant {
         }
     }
     public enum ItemColorEnum{
-        RED(Color.RED,0),BLACK(Color.BLACK,1),
-        RED_(Color.RED,1),BLACK_(Color.BLACK,0);
+        RED(Color.RED,0,0,3,2,5),
+        BLACK(Color.BLACK,1,7,3,9,5),
+        RED_(Color.RED,1,7,3,9,5),
+        BLACK_(Color.BLACK,0,0,3,2,5);
         private int color;
         private int type;
-        ItemColorEnum(int color,int type){
+        private int shuaiMinX;
+        private int shuaiMinY;
+        private int shuaiMaxX;
+        private int shuaiMaxY;
+        ItemColorEnum(int color,int type,int shuaiMinY,int shuaiMinX,int shuaiMaxY,int shuaiMaxX){
             this.color = color;
             this.type = type;
+            this.shuaiMinY = shuaiMinY;
+            this.shuaiMinX = shuaiMinX;
+            this.shuaiMaxY = shuaiMaxY;
+            this.shuaiMaxX = shuaiMaxX;
         }
 
         public int getColor() {
@@ -198,6 +207,22 @@ public class GlobalConstant {
 
         public int getType() {
             return type;
+        }
+
+        public int getShuaiMinX() {
+            return shuaiMinX;
+        }
+
+        public int getShuaiMinY() {
+            return shuaiMinY;
+        }
+
+        public int getShuaiMaxX() {
+            return shuaiMaxX;
+        }
+
+        public int getShuaiMaxY() {
+            return shuaiMaxY;
         }
     }
 }

@@ -1,11 +1,11 @@
-package com.example.game.view;
+package com.example.game.view.chess;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import com.example.game.contanst.GlobalConstant;
+import com.example.game.view.chess.contanst.GlobalConstant;
 
 import java.util.*;
 
@@ -38,11 +38,13 @@ public class ContainerLaout extends RelativeLayout {
     public void onWindowFocusChanged(boolean hasWindowFocus) {
         super.onWindowFocusChanged(hasWindowFocus);
         synchronized (GlobalConstant.handLock) {
-            if (GlobalConstant.containerLaout == null) {
-                GlobalConstant.containerLaout = this;
-            }
-            if(chessView != null) {
-                GlobalConstant.batchAddItem(chessView);
+            if(chessItems.size() == 0) {
+                if (GlobalConstant.containerLaout == null) {
+                    GlobalConstant.containerLaout = this;
+                }
+                if (chessView != null) {
+                    GlobalConstant.batchAddItem(chessView);
+                }
             }
         }
     }
@@ -74,7 +76,7 @@ public class ContainerLaout extends RelativeLayout {
         }
     }
 
-    public void removeChessItem(int cellX,int cellY){
+    public void removeChessItem(int cellX, int cellY){
         synchronized (chessItems){
             Iterator<ChessItem> iterator = chessItems.iterator();
             while(iterator.hasNext()){
@@ -87,15 +89,8 @@ public class ContainerLaout extends RelativeLayout {
             }
         }
     }
-    public List<ChessItem> getBoundary(ChessItem curItem){
-        synchronized (chessItems){
-            return curItem.getBoundary(chessItems);
-        }
-    }
-    public int getContainerType(){
-        if(chessView == null){
-            return 1;
-        }
-        return chessView.getContainerType();
+
+    public List<ChessItem> getChessItems() {
+        return chessItems;
     }
 }

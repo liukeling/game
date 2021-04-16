@@ -2,10 +2,11 @@ package com.example.game.view.chess.items;
 
 import android.content.Context;
 import android.util.Log;
-import com.example.game.contanst.GlobalConstant;
-import com.example.game.view.ChessItem;
+import com.example.game.view.chess.contanst.GlobalConstant;
+import com.example.game.view.chess.ChessItem;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class BingItem extends ChessItem{
@@ -22,20 +23,31 @@ public class BingItem extends ChessItem{
     }
 
     @Override
-    public List<ChessItem> getBoundary(List<ChessItem> allItems) {
-        return null;
-    }
-
-    @Override
     protected List<Integer[]> getDownInfoXYs() {
         List<Integer[]> indexs = new ArrayList<>(GlobalConstant.ItemNameEnum.BING.getMaxIndexCount());
-        indexs.add(new Integer[]{cellX+1,cellY});
-        indexs.add(new Integer[]{cellX-1,cellY});
-        indexs.add(new Integer[]{cellX,getColor().getType() == 0?cellY+1:cellY-1});
+        int type = getColor().getType();
+        if((type == 0 && cellY > 4) || (type == 1 && cellY < 5)) {
+            indexs.add(new Integer[]{cellX + 1, cellY});
+            indexs.add(new Integer[]{cellX - 1, cellY});
+        }
+        indexs.add(new Integer[]{cellX,type == 0?cellY+1:cellY-1});
 
-        //边界
-        List<ChessItem> boundary = GlobalConstant.containerLaout.getBoundary(this);
-
+        List<ChessItem> items = GlobalConstant.containerLaout.getChessItems();
+        synchronized (items){
+            for (ChessItem item : items) {
+                if((item.getCellY() == cellY && Math.abs(item.getCellX() - cellX) == 1)||
+                        (item.getCellX() == cellX && Math.abs(item.getCellY() - cellY) == 1)){
+                    Iterator<Integer[]> iterator = indexs.iterator();
+                    boolean remove = type == item.getColor().getType();
+                    while (iterator.hasNext()){
+                        Integer[] index = iterator.next();
+                        if(item.getCellX() == index[0] && item.getCellY() == index[1] && remove){
+                            iterator.remove();
+                        }
+                    }
+                }
+            }
+        }
         return indexs;
     }
 

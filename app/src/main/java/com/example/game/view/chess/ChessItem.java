@@ -1,13 +1,11 @@
-package com.example.game.view;
+package com.example.game.view.chess;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.RectF;
-import android.util.AttributeSet;
 import android.view.View;
 import androidx.annotation.Nullable;
-import com.example.game.contanst.GlobalConstant;
+import com.example.game.view.chess.contanst.GlobalConstant;
 
 import java.util.List;
 
@@ -112,8 +110,6 @@ public abstract class ChessItem extends BaseView {
     public GlobalConstant.ItemColorEnum getColor() {
         return color;
     }
-
-    public abstract List<ChessItem> getBoundary(List<ChessItem> allItems);
 
     /**
      * 获取提示点坐标

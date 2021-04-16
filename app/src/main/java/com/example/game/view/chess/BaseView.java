@@ -1,4 +1,4 @@
-package com.example.game.view;
+package com.example.game.view.chess;
 
 import android.content.Context;
 import android.graphics.Canvas;

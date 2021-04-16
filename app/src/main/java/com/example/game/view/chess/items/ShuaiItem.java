@@ -2,10 +2,11 @@ package com.example.game.view.chess.items;
 
 import android.content.Context;
 import android.util.Log;
-import com.example.game.contanst.GlobalConstant;
-import com.example.game.view.ChessItem;
+import com.example.game.view.chess.contanst.GlobalConstant;
+import com.example.game.view.chess.ChessItem;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class ShuaiItem extends ChessItem {
@@ -21,39 +22,42 @@ public class ShuaiItem extends ChessItem {
     }
 
     @Override
-    public List<ChessItem> getBoundary(List<ChessItem> allItems) {
-        return null;
-    }
-
-    @Override
     protected List<Integer[]> getDownInfoXYs() {
         List<Integer[]> indexs = new ArrayList<>(GlobalConstant.ItemNameEnum.SHUAI.getMaxIndexCount());
         for (int i = 0; i < GlobalConstant.ItemNameEnum.SHUAI.getMaxIndexCount(); i ++){
-            int xOryAddOrSub = i%2;//0,1
-            int otherAddOrSub = 1;
-            int xyAddSubType = i/2;//0,1,2,3
             int x = cellX;
             int y = cellY;
-            switch (xyAddSubType) {
+            switch (i) {
                 case 0:
-                    x = x + xOryAddOrSub;
-                    y = y - otherAddOrSub;
+                    x = x + 1;
                     break;
                 case 1:
-                    x = x - xOryAddOrSub;
-                    y = y + otherAddOrSub;
+                    x = x - 1;
                     break;
                 case 2:
-                    y = y + xOryAddOrSub;
-                    x = x + otherAddOrSub;
+                    y = y + 1;
                     break;
                 case 3:
-                    y = y - xOryAddOrSub;
-                    x = x - otherAddOrSub;
+                    y = y - 1;
                     break;
             }
-            indexs.add(new Integer[]{x, y});
+            if(x >= getColor().getShuaiMinX() && x <= getColor().getShuaiMaxX() && y >= getColor().getShuaiMinY() && y <= getColor().getShuaiMaxY()) {
+                indexs.add(new Integer[]{x, y});
+            }
         }
+        for (ChessItem chessItem : GlobalConstant.containerLaout.getChessItems()) {
+            if(chessItem.getColor().getType() != getColor().getType()){
+                continue;
+            }
+            Iterator<Integer[]> iterator = indexs.iterator();
+            while (iterator.hasNext()){
+                Integer[] index = iterator.next();
+                if(chessItem.getCellX() == index[0] && chessItem.getCellY() == index[1]){
+                    iterator.remove();
+                }
+            }
+        }
+
         return indexs;
     }
 }

@@ -1,19 +1,14 @@
 package com.example.game;
 
-import android.annotation.SuppressLint;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.util.Log;
-import android.view.View;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import com.example.game.contanst.GlobalConstant;
-import com.example.game.view.ChessItem;
-import com.example.game.view.ChessView;
-import com.example.game.view.ContainerLaout;
+import com.example.game.activity.chess.ChessActivity;
+import com.example.game.view.chess.ChessView;
+import com.example.game.view.chess.contanst.GlobalConstant;
 
 public class MainActivity extends AppCompatActivity {
     @Override

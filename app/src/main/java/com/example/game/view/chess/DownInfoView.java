@@ -1,11 +1,11 @@
-package com.example.game.view;
+package com.example.game.view.chess;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.view.View;
 import androidx.annotation.Nullable;
-import com.example.game.contanst.GlobalConstant;
+import com.example.game.view.chess.contanst.GlobalConstant;
 
 /**
  * 提示点
