@@ -105,8 +105,7 @@ public class PaoItem extends ChessItem {
             if(item == null){
                 continue;
             }
-            boolean canReplace = item.getColor().getType() != getColor().getType();
-            if(!canReplace){
+            if(item.getColor().getType() == getColor().getType()){
                 paoIndex[4+i] = -1;
             }
         }
@@ -121,12 +120,11 @@ public class PaoItem extends ChessItem {
      * @param type
      */
     private boolean replace(Integer[] data, int bound1Index, int bound2Index, int replaceData, int type) {
-        boolean twoReplace = false;
         if (data[bound2Index] == -1 && data[bound1Index] != -1) {
             data[bound2Index] = data[bound1Index];
-            twoReplace = true;
         }
         Integer tmp = data[bound1Index];
+        Integer tmp2 = data[bound2Index];
         data[bound1Index] = type == 0 ? Math.max(data[bound1Index], replaceData) :
                 (data[bound1Index] == -1 ? replaceData : Math.min(data[bound1Index], replaceData));
         if (data[bound1Index].intValue() != replaceData) {
@@ -135,10 +133,9 @@ public class PaoItem extends ChessItem {
             }
             data[bound2Index] = type == 0 ? Math.max(data[bound2Index], replaceData) :
                     Math.min(data[bound2Index], replaceData);
-            twoReplace = true;
         }else{
             data[bound2Index] = tmp;
         }
-        return twoReplace;
+        return !data[bound2Index].equals(tmp2);
     }
 }
