@@ -45,6 +45,20 @@ public class DownInfoView extends BaseView {
                     if(GlobalConstant.tmp != null &&( GlobalConstant.tmp instanceof ChessItem)){
                         //移动棋子到这里
                         GlobalConstant.reAddItemView((ChessItem)GlobalConstant.tmp,cellX,cellY);
+                        switch (GlobalConstant.colorFlag){
+                            case RED:
+                                GlobalConstant.colorFlag = GlobalConstant.ItemColorEnum.BLACK;
+                                break;
+                            case RED_:
+                                GlobalConstant.colorFlag = GlobalConstant.ItemColorEnum.BLACK_;
+                                break;
+                            case BLACK:
+                                GlobalConstant.colorFlag = GlobalConstant.ItemColorEnum.RED;
+                                break;
+                            case BLACK_:
+                                GlobalConstant.colorFlag = GlobalConstant.ItemColorEnum.RED_;
+                                break;
+                        }
                     }
                 }
                 l.onClick(DownInfoView.this);

@@ -63,15 +63,17 @@ public abstract class ChessItem extends BaseView {
                     if (!GlobalConstant.hasUpItem) {
                         if (GlobalConstant.containerLaout != null) {
                             if (bgColor == BASE_BG_COLOR) {
-                                //提示点
-                                List<Integer[]> downInfoXYs = getDownInfoXYs();
-                                for (Integer[] downInfoXY : downInfoXYs) {
-                                    GlobalConstant.addDownInfo(downInfoXY[0],downInfoXY[1]);
+                                if(color.equals(GlobalConstant.colorFlag)) {
+                                    //提示点
+                                    List<Integer[]> downInfoXYs = getDownInfoXYs();
+                                    for (Integer[] downInfoXY : downInfoXYs) {
+                                        GlobalConstant.addDownInfo(downInfoXY[0], downInfoXY[1]);
+                                    }
+                                    //拿起棋子 - 颜色变动
+                                    GlobalConstant.hasUpItem = true;
+                                    bgColor = Color.GREEN;
+                                    GlobalConstant.tmp = ChessItem.this;
                                 }
-                                //拿起棋子 - 颜色变动
-                                GlobalConstant.hasUpItem = true;
-                                bgColor = Color.GREEN;
-                                GlobalConstant.tmp = ChessItem.this;
                             } else {
                                 bgColor = BASE_BG_COLOR;
                             }

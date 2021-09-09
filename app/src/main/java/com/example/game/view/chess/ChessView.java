@@ -17,6 +17,7 @@ public class ChessView extends BaseView {
     public ChessView(Context context, int containerType) {
         super(context);
         this.containerType = containerType;
+        GlobalConstant.colorFlag = containerType == 0 ? GlobalConstant.ItemColorEnum.RED : GlobalConstant.ItemColorEnum.RED_;
     }
 
     @Override

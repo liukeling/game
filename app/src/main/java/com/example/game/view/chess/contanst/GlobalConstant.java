@@ -41,6 +41,8 @@ public class GlobalConstant {
     public static final Object handLock = new Object();
     public static ContainerLaout containerLaout;
     public static ChessItem tmp;
+    //记录当前着子方
+    public static GlobalConstant.ItemColorEnum colorFlag;
 
     /**
      * 初始化批量添加棋子
@@ -187,6 +189,7 @@ public class GlobalConstant {
         RED_(Color.RED,1,7,3,9,5),
         BLACK_(Color.BLACK,0,0,3,2,5);
         private int color;
+        //方位位置
         private int type;
         private int shuaiMinX;
         private int shuaiMinY;

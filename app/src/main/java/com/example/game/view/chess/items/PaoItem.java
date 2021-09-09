@@ -100,15 +100,15 @@ public class PaoItem extends ChessItem {
                 }
             }
         }
-        for (int i = 0; i < twoInfo.length; i++) {
-            ChessItem item = twoInfo[i];
-            if(item == null){
-                continue;
-            }
-            if(item.getColor().getType() == getColor().getType()){
-                paoIndex[4+i] = -1;
-            }
-        }
+//        for (int i = 0; i < twoInfo.length; i++) {
+//            ChessItem item = twoInfo[i];
+//            if(item == null){
+//                continue;
+//            }
+//            if(item.getColor().getType() == getColor().getType()){
+//                paoIndex[4+i] = -1;
+//            }
+//        }
         return paoIndex;
     }
 
@@ -120,11 +120,12 @@ public class PaoItem extends ChessItem {
      * @param type
      */
     private boolean replace(Integer[] data, int bound1Index, int bound2Index, int replaceData, int type) {
-        if (data[bound2Index] == -1 && data[bound1Index] != -1) {
-            data[bound2Index] = data[bound1Index];
-        }
         Integer tmp = data[bound1Index];
         Integer tmp2 = data[bound2Index];
+
+        if (data[bound2Index].intValue() == -1 && data[bound1Index].intValue() != -1) {
+            data[bound2Index] = data[bound1Index];
+        }
         data[bound1Index] = type == 0 ? Math.max(data[bound1Index], replaceData) :
                 (data[bound1Index] == -1 ? replaceData : Math.min(data[bound1Index], replaceData));
         if (data[bound1Index].intValue() != replaceData) {
@@ -136,6 +137,6 @@ public class PaoItem extends ChessItem {
         }else{
             data[bound2Index] = tmp;
         }
-        return !data[bound2Index].equals(tmp2);
+        return data[bound2Index].intValue() != tmp2.intValue();
     }
 }
