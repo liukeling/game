@@ -100,15 +100,15 @@ public class PaoItem extends ChessItem {
                 }
             }
         }
-//        for (int i = 0; i < twoInfo.length; i++) {
-//            ChessItem item = twoInfo[i];
-//            if(item == null){
-//                continue;
-//            }
-//            if(item.getColor().getType() == getColor().getType()){
-//                paoIndex[4+i] = -1;
-//            }
-//        }
+        for (int i = 0; i < twoInfo.length; i++) {
+            ChessItem item = twoInfo[i];
+            if(item == null){
+                continue;
+            }
+            if(item.getColor().getType() == getColor().getType()){
+                paoIndex[4+i] = -1;
+            }
+        }
         return paoIndex;
     }
 
