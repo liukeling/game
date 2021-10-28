@@ -48,13 +48,18 @@ public class ChessView extends BaseView {
         for (float i = 1; i <= 8; i = i + 1){
             //横
             canvas.drawLine(cellWidth/2,cellHeight*(i+0.5f), getWidth()-cellWidth/2f,cellHeight*(i+0.5f),paint);
-            if(i == 9f){
+            if(i == 8){
                 break;
             }
             //竖
             canvas.drawLine(cellWidth*(i+0.5f),cellHeight/2f,cellWidth*(i+0.5f),(4f+0.5f)*cellHeight,paint);
             canvas.drawLine(cellWidth*(i+0.5f),(5f+0.5f)*cellHeight,cellWidth*(i+0.5f),getHeight()-(cellHeight/2f),paint);
         }
+        //斜杠
+        canvas.drawLine(cellWidth*3.5f,cellHeight/2f,cellWidth*5.5f,cellHeight*2.5f,paint);
+        canvas.drawLine(cellWidth*5.5f,cellHeight/2f,cellWidth*3.5f,cellHeight*2.5f,paint);
+        canvas.drawLine(cellWidth*3.5f,getHeight() - cellHeight/2f,cellWidth*5.5f,getHeight()-cellHeight*2.5f,paint);
+        canvas.drawLine(cellWidth*5.5f,getHeight() - cellHeight/2f,cellWidth*3.5f,getHeight()-cellHeight*2.5f,paint);
         //汉字
         float textSize = cellWidth*2f/3f;
         float heigthDiff = cellHeight - textSize;

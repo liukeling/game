@@ -6,6 +6,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".activity.chess.ChessActivity">
-    <com.example.game.view.chess.ContainerLaout android:id="@+id/broadMain" android:layout_width="match_parent" android:layout_height="match_parent">
-    </com.example.game.view.chess.ContainerLaout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+    android:orientation="vertical">
+        <com.example.game.view.chess.ContainerLaout android:id="@+id/broadMain" android:layout_width="match_parent"
+                                                    android:layout_height="wrap_content"
+                                                    android:layout_weight="9"
+                                                    android:layout_centerInParent="true">
+        </com.example.game.view.chess.ContainerLaout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_weight="1">
+
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
