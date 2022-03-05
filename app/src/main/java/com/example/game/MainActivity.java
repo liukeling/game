@@ -9,20 +9,28 @@ import android.widget.RelativeLayout;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.example.game.activity.chess.ChessActivity;
+import com.example.game.activity.test.TestActivity;
 import com.example.game.view.chess.ChessView;
 import com.example.game.view.chess.contanst.GlobalConstant;
 
 public class MainActivity extends AppCompatActivity {
-    Button button;
+    Button begin,test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        button = findViewById(R.id.btn_begin);
-        button.setOnClickListener(new View.OnClickListener() {
+        begin = findViewById(R.id.btn_begin);
+        begin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(getApplicationContext(),ChessActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
+            }
+        });
+        test = findViewById(R.id.btn_test);
+        test.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), TestActivity.class).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
             }
         });
     }

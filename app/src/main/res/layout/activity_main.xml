@@ -8,12 +8,16 @@
         tools:context=".MainActivity">
     <RelativeLayout android:layout_width="match_parent" android:layout_height="match_parent">
         <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:orientation="vertical"
                       android:layout_centerInParent="true">
 
             <Button android:id="@+id/btn_begin"
                     android:layout_width="240px"
                     android:layout_height="120px"
                     android:text="开始"/>
+            <Button android:layout_width="240px" android:layout_height="120px"
+                    android:text="test"
+                    android:id="@+id/btn_test"/>
         </LinearLayout>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

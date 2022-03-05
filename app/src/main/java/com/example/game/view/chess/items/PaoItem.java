@@ -2,6 +2,8 @@ package com.example.game.view.chess.items;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
+import com.alibaba.fastjson.JSONObject;
 import com.example.game.view.chess.contanst.GlobalConstant;
 import com.example.game.view.chess.ChessItem;
 
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PaoItem extends ChessItem {
+    private static final String TAG = "pao item tag";
     public PaoItem(Context context, GlobalConstant.ItemColorEnum color, int cellX, int cellY) {
         super(context, color, GlobalConstant.ItemNameEnum.PAO, cellX, cellY);
     }
@@ -16,7 +19,7 @@ public class PaoItem extends ChessItem {
     public PaoItem(Context context, ChessItem chessItem, int cellX, int cellY) {
         super(context, chessItem.getColor(), GlobalConstant.ItemNameEnum.PAO, cellX, cellY);
         if (!(chessItem instanceof PaoItem)) {
-            Log.w("che item tag", "chess item is:" + chessItem.getName().getName());
+            Log.w(TAG, "chess item is:" + chessItem.getName().getName());
         }
     }
 
@@ -65,7 +68,8 @@ public class PaoItem extends ChessItem {
 
         List<ChessItem> items = GlobalConstant.containerLaout.getChessItems();
         Integer[] paoIndex = new Integer[]{-1, -1, -1, -1, -1, -1, -1, -1};
-        ChessItem[] twoInfo = new ChessItem[4];
+        ChessItem[] replaceItems = new ChessItem[Math.min(17, items.size())];
+        int addReplaceIndex = 0;
         synchronized (items) {
             for (ChessItem item : items) {
                 if (item == this) {
@@ -93,20 +97,36 @@ public class PaoItem extends ChessItem {
                 }
 
                 if (indexType != -1) {
-                    twoReplace = replace(paoIndex, indexType, indexType+4, indexType/2 == 0 ? item.getCellY() : item.getCellX(), indexType%2);
-                    if (twoReplace) {
-                        twoInfo[indexType] = item;
-                    }
+                    replace(paoIndex, indexType, indexType+4, indexType/2 == 0 ? item.getCellY() : item.getCellX(), indexType%2);
+                    replaceItems[addReplaceIndex] = item;
+                    addReplaceIndex ++;
                 }
             }
         }
-        for (int i = 0; i < twoInfo.length; i++) {
-            ChessItem item = twoInfo[i];
-            if(item == null){
+        for (int i = 0; i < addReplaceIndex; i ++){
+            ChessItem item = replaceItems[i];
+            if(item == this){
                 continue;
             }
-            if(item.getColor().getType() == getColor().getType()){
-                paoIndex[4+i] = -1;
+            int index = -1;
+            if (item.getCellX() == cellX) {
+                if(item.getCellY() == paoIndex[4]){
+                    index = 4;
+                }else if(item.getCellY() == paoIndex[5]){
+                    index = 5;
+                }
+            }
+            if (item.getCellY() == cellY) {
+                if(item.getCellX() == paoIndex[6]){
+                    index = 6;
+                }else if(item.getCellX() > paoIndex[7]){
+                    index = 7;
+                }
+            }
+            if(index != -1){
+                if(item.getColor().getType() == getColor().getType()){
+                    paoIndex[index] = -1;
+                }
             }
         }
         return paoIndex;
@@ -114,14 +134,13 @@ public class PaoItem extends ChessItem {
 
     /**
      * @param data
-     * @param bound1Index
-     * @param bound2Index
-     * @param replaceData
-     * @param type
+     * @param bound1Index   当前范围在data中的索引
+     * @param bound2Index   当前范围在data中的索引
+     * @param replaceData   需要判断的坐标
+     * @param type          0标识子在上或者左，1标识在下或者右
      */
-    private boolean replace(Integer[] data, int bound1Index, int bound2Index, int replaceData, int type) {
+    private void replace(Integer[] data, int bound1Index, int bound2Index, int replaceData, int type) {
         Integer tmp = data[bound1Index];
-        Integer tmp2 = data[bound2Index];
 
         if (data[bound2Index].intValue() == -1 && data[bound1Index].intValue() != -1) {
             data[bound2Index] = data[bound1Index];
@@ -129,14 +148,13 @@ public class PaoItem extends ChessItem {
         data[bound1Index] = type == 0 ? Math.max(data[bound1Index], replaceData) :
                 (data[bound1Index] == -1 ? replaceData : Math.min(data[bound1Index], replaceData));
         if (data[bound1Index].intValue() != replaceData) {
+            data[bound2Index] = type == 0 ? Math.max(data[bound2Index], replaceData) :
+                    Math.min(data[bound2Index], replaceData);
             if (data[bound1Index].intValue() == data[bound2Index].intValue()) {
                 data[bound2Index] = replaceData;
             }
-            data[bound2Index] = type == 0 ? Math.max(data[bound2Index], replaceData) :
-                    Math.min(data[bound2Index], replaceData);
         }else{
             data[bound2Index] = tmp;
         }
-        return data[bound2Index].intValue() != tmp2.intValue();
     }
 }
